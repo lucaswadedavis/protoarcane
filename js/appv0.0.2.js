@@ -133,7 +133,9 @@ app.c.lexer=function(input){
 app.v.init=function(){
 	app.v.style();
 	var d="";
-	d+="<table width='100%' ><tr><td id='left'>";
+	d+="<table width='100%' ><tr>";
+		d+="<td id='farleft'>"+app.v.lexicon()+"</td>";
+		d+="<td id='left'>";
 		d+="<textarea rows='5' cols='5' id='arcane' autofocus></textarea>";
 		d+="<input type='button' value='compile' id='compile'></input>";
 		d+="<div id='compiled'></div>";
@@ -145,6 +147,22 @@ app.v.init=function(){
 	$("body").html(d);
 };
 
+
+app.v.lexicon=function(){
+	var d="";
+	d+="<h2>lexicon</h2>";
+	d+="<table id='lexicon'><tr><th>regular expression</th><th>javascript</th></tr>";
+		for (var i=0;i<app.m.lexer.length;i++){
+			var rc="odd";
+			if (i%2==0){rc="even"}
+			d+="<tr class='"+rc+"'>";
+				d+="<td>"+app.m.lexer[i][0]+"</td>";
+				d+="<td>"+app.m.lexer[i][1]+"</td>";
+			d+="</tr>";
+		}
+	d+="</table>";
+	return d;
+};
 
 app.v.style=function(){
 	davis.style("body",{
@@ -210,4 +228,21 @@ app.v.style=function(){
 		"color":"#000"
 	});
 
+	davis.style("td#farleft",{"padding":"0"});
+	davis.style("table#lexicon",{
+		"margin":"0",
+		"padding":"0",
+		"width":"100%"
+	})
+
+	davis.style("table#lexicon tr.odd td, table#lexicon tr.even td",{
+		"padding":"0",
+		"margin":"0",
+		"margin-top":"10px",
+		"background":"#333"
+	});
+
+	davis.style("table#lexicon tr.odd td",{
+		"background":"#555"
+	});
 };
