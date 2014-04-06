@@ -9,6 +9,12 @@ var app={m:{},v:{},c:{}};
 
 /////////////////////////////////////////////////////////////////////////////////
 
+app.m.codebase=[];
+app.m.colors={
+	lightGrey:"#999",
+	primary:"#f37"
+};
+
 /*
 Notes on ROILA:
 
@@ -97,9 +103,14 @@ app.c.init=function(){
 app.c.listeners=function(){
 
 $("input#compile").click(function(){
+	var snipet={};
 	var input=$("#arcane").val();
+	snipet.arcane=input;
 	input=app.c.lexer(input);
-	$("div#compiled").html(input);
+	snipet.js=input;
+	app.m.codebase.push(snipet);
+
+	$("div#compiled").html(app.v.codebase() );
 });
 
 $("input#run").click(function(){
@@ -147,6 +158,18 @@ app.v.init=function(){
 	$("body").html(d);
 };
 
+
+app.v.codebase=function(){
+	var d="";
+	for (var i=0;i<app.m.codebase.length;i++){
+		d+="<div class='snipet'>";
+			d+="<div class='delete'>x</div>";
+			d+="<p class='arcane'>"+app.m.codebase[i].arcane+"</p>";
+			d+="<p class='js'>"+app.m.codebase[i].js+"</p>";
+		d+="</div>";
+	}
+	return d;
+};
 
 app.v.lexicon=function(){
 	var d="";
@@ -244,5 +267,43 @@ app.v.style=function(){
 
 	davis.style("table#lexicon tr.odd td",{
 		"background":"#555"
+	});
+
+	davis.style("div.delete",{
+		"float":"right",
+		"width":"20px",
+		"height":"20px",
+		"margin":"0",
+		"text-align":"center",
+		"cursor":"pointer",
+		"border":"1px solid #000",
+		"color":"#000",
+		"font-size":"16px"
+	});
+
+	davis.style("div#compiled",{
+		"margin":"0",
+		"padding":"0"
+	});
+
+
+	davis.style("div.snipet",{
+		"background":"#fff",
+		"border":"1px solid #000",
+		"margin":"0",
+		"padding":"10px",
+		"text-align":"left"
+	});
+
+	davis.style("p.arcane",{
+		"color":app.m.colors.primary,
+		"padding":"0",
+		"margin":"0"
+	});
+	davis.style("p.js",{
+		"padding":"0",
+		"margin":"0",
+		"font-size":"0.5em",
+		"color":app.m.colors.lightGrey
 	});
 };
