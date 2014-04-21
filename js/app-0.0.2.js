@@ -102,6 +102,16 @@ app.c.init=function(){
 
 app.c.listeners=function(){
 
+$("#arcane").keyup(function(){
+	var snipet={};
+	var input=$("#arcane").val();
+	snipet.arcane=input;
+	input=app.c.lexer(input);
+	snipet.js=input;
+
+	$("div#inProgress").html(snipet.js );
+});
+
 $("input#compile").click(function(){
 	var snipet={};
 	var input=$("#arcane").val();
@@ -114,9 +124,9 @@ $("input#compile").click(function(){
 });
 
 $("input#run").click(function(){
-	var input=$("#arcane").val();
-	input=app.c.lexer(input);
-	input=eval(input);
+	for (var i=0;i<app.m.codebase.length;i++){
+		eval(app.m.codebase[i].js);
+	}
 	input=$("#codeToRun").val();
 	input=app.c.lexer(input);
 	input=eval(input);
@@ -149,6 +159,7 @@ app.v.init=function(){
 		d+="<td id='left'>";
 		d+="<textarea rows='5' cols='5' id='arcane' autofocus></textarea>";
 		d+="<input type='button' value='compile' id='compile'></input>";
+		d+="<div id='inProgress'></div>";
 		d+="<div id='compiled'></div>";
 	d+="</td><td id='right'>";
 		d+="<textarea rows='5' cols='5' id='codeToRun' ></textarea>";
