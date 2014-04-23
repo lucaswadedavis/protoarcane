@@ -1,4 +1,6 @@
-protoarcane: a little experimental language that transpiles to javascript.
+#Protoarcane: 
+
+a little experimental language that transpiles to javascript.
 
 inspired by arabic, protoarcane uses prefixes and suffixes to do programmy stuff.
 
